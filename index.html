@@ -26,7 +26,6 @@ header h1{
  text-shadow:0 0 15px rgba(75,108,183,.6);
 }
 header p{color:#9fa8b2;margin-top:10px}
-
 .counter{margin-top:10px;color:#4b6cb7;font-size:1.2em}
 
 /* SECTION */
@@ -147,43 +146,29 @@ footer{
 
 <div class="story fade">
 <h2>Our Story</h2>
-<p>
-We started on Aug 29, 2019.  
-Through laughter, distance, growth, and dreams —  
-every moment became part of us.
-</p>
+<p>We started Aug 29, 2019 — and every memory after became part of us.</p>
 </div>
 
 <div class="story fade">
 <h2>Our Timeline</h2>
-<p>💫 Aug 29, 2019 — Beginning</p>
-<p>📸 First memories captured</p>
-<p>🎉 First celebration</p>
-<p>✈️ First adventure</p>
+<p>💫 Beginning</p>
+<p>📸 First photos</p>
+<p>🎉 Celebrations</p>
+<p>✈️ Adventures</p>
 <p>❤️ Still choosing each other</p>
-</div>
-
-<div class="story fade">
-<h2>A Letter For You</h2>
-<p>
-No matter how time changes things,  
-I still choose you — again and again.
-</p>
 </div>
 
 <h2 class="fade" style="text-align:center;margin-bottom:30px">Captured Moments</h2>
 
 <div class="gallery fade">
-
 <div class="photo"><img src="IMG_5435.jpeg"><div class="cap">Special day</div></div>
 <div class="photo"><img src="IMG_9005.jpeg"><div class="cap">Our smile</div></div>
-<div class="photo"><img src="IMG_5838.jpeg"><div class="cap">Trip memory</div></div>
+<div class="photo"><img src="IMG_5838.jpeg"><div class="cap">Trip</div></div>
 <div class="photo"><img src="IMG_2632.jpeg"><div class="cap">Together</div></div>
 <div class="photo"><img src="IMG_1716.jpeg"><div class="cap">Moments</div></div>
 <div class="photo"><img src="IMG_1406.jpeg"><div class="cap">Laughs</div></div>
 <div class="photo"><img src="IMG_1030.jpeg"><div class="cap">Bond</div></div>
 <div class="photo"><img src="IMG_4184.jpeg"><div class="cap">Forever</div></div>
-
 </div>
 
 <div class="quote fade">
@@ -192,9 +177,7 @@ I still choose you — again and again.
 
 </div>
 
-<footer>
-Made with intention • Forever
-</footer>
+<footer>Made with intention • Forever</footer>
 
 <!-- MODAL -->
 <div class="modal" id="imgModal">
@@ -205,21 +188,18 @@ Made with intention • Forever
 <button class="btn" id="musicBtn">▶ Music</button>
 <button class="btn" id="slideBtn" onclick="startSlide()">🎞 Slideshow</button>
 
-<audio id="bgMusic" src="Hiraya Manawari - TJ Monterde  KZ Tandingan - Official Lyric Video 2.mp3"></audio>
+<audio id="bgMusic" src="music.mp3"></audio>
 
 <script>
-/* DAYS COUNTER */
+/* COUNTERS */
 const startDate=new Date("2019-08-29");
-document.getElementById("daysCount").textContent=
-Math.floor((new Date()-startDate)/(1000*60*60*24));
+daysCount.textContent=Math.floor((new Date()-startDate)/(1000*60*60*24));
 
-/* ANNIVERSARY */
 function nextAnniv(){
  const now=new Date();
  let next=new Date(now.getFullYear(),7,29);
  if(now>next) next.setFullYear(next.getFullYear()+1);
- document.getElementById("anniv").textContent=
- Math.floor((next-now)/(1000*60*60*24))+" days";
+ anniv.textContent=Math.floor((next-now)/(1000*60*60*24))+" days";
 }
 nextAnniv();
 
@@ -227,57 +207,65 @@ nextAnniv();
 const txt="Every memory with you is my favorite chapter.";
 let ti=0;
 (function type(){
- if(ti<txt.length){
-  typeText.innerHTML+=txt[ti++];
-  setTimeout(type,40);
- }
+ if(ti<txt.length){ typeText.innerHTML+=txt[ti++]; setTimeout(type,40); }
 })();
 
 /* MODAL */
 const modal=document.getElementById('imgModal');
 const modalImg=document.getElementById('modalImg');
 document.querySelectorAll('.gallery img').forEach(img=>{
- img.onclick=()=>{modal.style.display='flex';modalImg.src=img.src;}
+ img.onclick=()=>{ modal.style.display='flex'; modalImg.src=img.src; }
 });
-function closeModal(){modal.style.display='none'}
 
-/* MUSIC */
-const music=document.getElementById("bgMusic");
-const mbtn=document.getElementById("musicBtn");
-music.volume=.4;
-mbtn.onclick=()=>{
- if(music.paused){music.play();mbtn.textContent="⏸ Pause"}
- else{music.pause();mbtn.textContent="▶ Music"}
-};
+/* SLIDESHOW FIXED */
+let slideTimer=null;
 
-/* SLIDESHOW */
 function startSlide(){
+ if(slideTimer) return;
  const imgs=document.querySelectorAll('.gallery img');
  let i=0;
- setInterval(()=>imgs[i++%imgs.length].click(),3500);
+ slideTimer=setInterval(()=>{
+  imgs[i++%imgs.length].click();
+ },3500);
 }
 
+function stopSlide(){
+ if(slideTimer){
+  clearInterval(slideTimer);
+  slideTimer=null;
+ }
+}
+
+function closeModal(){
+ modal.style.display='none';
+ stopSlide();
+}
+
+modal.onclick=e=>{ if(e.target===modal) closeModal(); }
+
+/* MUSIC */
+const music=bgMusic;
+music.volume=.4;
+musicBtn.onclick=()=>{
+ if(music.paused){music.play();musicBtn.textContent="⏸ Pause"}
+ else{music.pause();musicBtn.textContent="▶ Music"}
+};
+
 /* FADE */
-const fades=document.querySelectorAll('.fade');
-addEventListener('scroll',()=>{
- fades.forEach(e=>{
-  if(e.getBoundingClientRect().top<innerHeight-100)
-   e.classList.add('show');
+document.querySelectorAll('.fade').forEach(el=>{
+ const io=new IntersectionObserver(e=>{
+  if(e[0].isIntersecting) el.classList.add('show');
  });
+ io.observe(el);
 });
 
-/* TITLE SECRET */
+/* SECRET */
 title.onclick=()=>alert("Hidden message: I still choose you.");
 
 /* HEARTS */
 const c=hearts,ctx=c.getContext("2d");
 c.width=innerWidth;c.height=innerHeight;
-let H=[...Array(40)].map(()=>({
- x:Math.random()*c.width,
- y:Math.random()*c.height,
- s:Math.random()*6+4,
- v:Math.random()*.6+.2
-}));
+let H=[...Array(40)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,s:Math.random()*6+4,v:Math.random()*.6+.2}));
 function heart(x,y,s){
  ctx.beginPath();
  ctx.fillStyle="rgba(255,100,120,.7)";
@@ -290,15 +278,10 @@ function heart(x,y,s){
 }
 (function anim(){
  ctx.clearRect(0,0,c.width,c.height);
- H.forEach(h=>{
-  heart(h.x,h.y,h.s);
-  h.y-=h.v;
-  if(h.y<-10) h.y=c.height+10;
- });
+ H.forEach(h=>{heart(h.x,h.y,h.s);h.y-=h.v;if(h.y<-10)h.y=c.height+10;});
  requestAnimationFrame(anim);
 })();
 </script>
 
 </body>
 </html>
-
