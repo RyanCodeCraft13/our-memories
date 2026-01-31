@@ -88,6 +88,30 @@ header p {
     box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     filter: grayscale(0%);
 }
+/*IMAGGE MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    insert: 0;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+    
+.modal img {
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: 20px;
+}
+
+.modal span {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: white;
+    cursor: pointer;
+}
 
 /* QUOTE */
 .quote {
@@ -168,7 +192,58 @@ footer span {
     Made with intention • <span>Forever</span>
 </footer>
 
+<!--IMAGE MODAL -->
+<div class="modal" id="imgModal">
+    <span onclick="closeModal()">x</span>
+    <img id="modalImg">
+</div>
+
+<!-- MUSIC -->
+<button class="music-btn" onclick="toggleMusic()">🎵 Play Memory</button>
+<audio id="bgMusic" src="music.mp3"></audio>
+
+<script>
+/* IMAGE CLICK */
+const images = document.querySelectorAll('.gallery img');
+const modal = document.getElementById('imgModal');
+const modalImg = document.getElementById('modalImg');
+
+images.forEach(img => {
+    img.addEventListener('click', () => {
+        modal.style.display = 'flex';
+        modalImg.src = img.src;
+    });
+});
+
+function closeModal() {
+    modal.style.display = 'none';
+}
+
+/* MUSIC */
+const music = document.getElementById('bgMusic');
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+    } else {
+        music.pause();
+    }
+}
+
+/* FADE IN */
+const fades = document.querySelectorAll('.fade');
+window.addEventListener('scroll', () => {
+    fades.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+            el.classList.add('show');
+        }
+    });
+});
+</script>
+
+
 </body>
 
 </html>
+
 
