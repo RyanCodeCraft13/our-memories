@@ -156,8 +156,10 @@ header p {
     padding: 14px 22px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    .music-btn.playing {
-        background: #2ecc71;
+}
+
+.music-btn.playing {
+    background: #2ecc71;
 }
 
 /* FOOTER */
@@ -250,11 +252,9 @@ function closeModal() {
     modal.style.display = 'none';
 }
 
-/* MUSIC */
-<script>
+/* MUSIC BUTTON */
 const music = document.getElementById("bgMusic");
 const musicBtn = document.getElementById("musicBtn");
-
 music.volume = 0.4; // soft volume
 
 function playMusic() {
@@ -282,7 +282,7 @@ document.addEventListener("click", function startOnce() {
     playMusic();
     document.removeEventListener("click", startOnce);
 }, { once: true });
-    
+
 /* FADE IN */
 const fades = document.querySelectorAll('.fade');
 window.addEventListener('scroll', () => {
@@ -296,7 +296,3 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
-
-
-
-
