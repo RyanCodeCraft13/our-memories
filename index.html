@@ -156,6 +156,8 @@ header p {
     padding: 14px 22px;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    .music-btn.playing {
+        background: #2ecc71;
 }
 
 /* FOOTER */
@@ -228,7 +230,7 @@ footer span {
 </div>
 
 <!-- MUSIC -->
-<button class="music-btn" onclick="toggleMusic()">🎵 Play Memory</button>
+<button class="music-btn" id="musicBtn">▶️ Play Music</button>
 <audio id="bgMusic" src="music.mp3"></audio>
 
 <script>
@@ -249,15 +251,38 @@ function closeModal() {
 }
 
 /* MUSIC */
-const music = document.getElementById('bgMusic');
+<script>
+const music = document.getElementById("bgMusic");
+const musicBtn = document.getElementById("musicBtn");
 
-function toggleMusic() {
-    if (music.paused) {
-        music.play();
-    } else {
-        music.pause();
-    }
+music.volume = 0.4; // soft volume
+
+function playMusic() {
+    music.play();
+    musicBtn.textContent = "⏸ Pause Music";
+    musicBtn.classList.add("playing");
 }
+
+function pauseMusic() {
+    music.pause();
+    musicBtn.textContent = "▶️ Play Music";
+    musicBtn.classList.remove("playing");
+}
+
+musicBtn.addEventListener("click", () => {
+    if (music.paused) {
+        playMusic();
+    } else {
+        pauseMusic();
+    }
+});
+
+/* START MUSIC ON FIRST CLICK ANYWHERE */
+document.addEventListener("click", function startOnce() {
+    playMusic();
+    document.removeEventListener("click", startOnce);
+}, { once: true });
+</script>
 
 /* FADE IN */
 const fades = document.querySelectorAll('.fade');
@@ -272,5 +297,6 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
+
 
 
