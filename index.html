@@ -129,6 +129,32 @@ header p {
     color: #d0d0d0;
 }
 
+/* FADE IN */
+.fade {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 1s ease;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* MUSIC BUTTON */
+.music-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #4b6cb7;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 22px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
 /* FOOTER */
 footer {
     margin-top: 80px;
@@ -245,5 +271,6 @@ window.addEventListener('scroll', () => {
 </body>
 
 </html>
+
 
 
