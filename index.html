@@ -13,8 +13,8 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135DEG, #0b0f14, #141a22, #1f2a36);
-    color: #e6e6e6;
+    background: linear-gradient(135deg, #0f0f0f, #1c1c1c, #2a2a2a);
+    color: #e0e0e0;
 }
 
 /* HEADER */
@@ -80,6 +80,7 @@ header p {
     width: 100%;
     border-radius: 18px;
     filter: grayscale(15%);
+    cursor: pointer;
     transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s;
 }
 
@@ -88,17 +89,18 @@ header p {
     box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     filter: grayscale(0%);
 }
-/*IMAGGE MODAL */
+
+/* IMAGE MODAL */
 .modal {
     display: none;
     position: fixed;
-    insert: 0;
+    inset: 0;
     background: rgba(0,0,0,0.9);
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
-    
+
 .modal img {
     max-width: 90%;
     max-height: 85%;
@@ -109,6 +111,7 @@ header p {
     position: absolute;
     top: 30px;
     right: 40px;
+    font-size: 40px;
     color: white;
     cursor: pointer;
 }
@@ -180,21 +183,21 @@ footer span {
 
 <div class="section">
 
-    <div class="story">
+    <div class="story fade">
         <h2>Our Story</h2>
         <p>
             Some people come into your life quietly and change everything.
             Every moment we shared — laughter, silence, chaos, peace —
-            became something worth keeping.  
+            became something worth keeping.
             <br><br>
             This page exists to remind us that no matter how far we go,
             these memories remain solid, real, and ours.
         </p>
     </div>
 
-    <h2 class="gallery-title">Captured Moments</h2>
+    <h2 class="gallery-title fade">Captured Moments</h2>
 
-    <div class="gallery">
+    <div class="gallery fade">
         <img src="IMG_9039.jpeg">
         <img src="IMG_9005.jpeg">
         <img src="IMG_5838.jpeg">
@@ -202,10 +205,10 @@ footer span {
         <img src="IMG_1716.jpeg">
         <img src="IMG_1406.jpeg">
         <img src="IMG_1030.jpeg">
-        <img src="img8.jpg">
+        <img src="img8.jpeg">
     </div>
 
-    <div class="quote">
+    <div class="quote fade">
         <p>
             “Strong love isn’t loud.  
             It’s steady, silent, and always there.”
@@ -218,9 +221,9 @@ footer span {
     Made with intention • <span>Forever</span>
 </footer>
 
-<!--IMAGE MODAL -->
+<!-- IMAGE MODAL -->
 <div class="modal" id="imgModal">
-    <span onclick="closeModal()">x</span>
+    <span onclick="closeModal()">×</span>
     <img id="modalImg">
 </div>
 
@@ -267,10 +270,5 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-
 </body>
-
 </html>
-
-
-
