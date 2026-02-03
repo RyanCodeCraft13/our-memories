@@ -192,8 +192,32 @@ footer{
 
 <script>
 /* COUNTERS */
-const startDate=new Date("2019-08-29");
-daysCount.textContent=Math.floor((new Date()-startDate)/(1000*60*60*24));
+const startDate = new Date ("2019-08-29");
+function calcYMD(start, end) {
+ let years = end.getFullYear() - start.getFullYear();
+ let months = end.getMonth() - start.getMonth();
+ let days = end.getDate() - start.getDate();
+
+ if (days < 0) {
+  months--;
+  const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+  days += prevMonth;
+ }
+
+ if (months < 0) {
+  years--;
+  months += 12;
+ }
+
+return `${years} year${years!==1?'s':''} ${months} month${months!==1?'s':''} ${days} day${days!==1?'s':''}`;
+}
+
+function updateCounter(){
+ const now = new Date();
+ document.getElementById("ymdCount").textContent = calcYMD(startDate, now);
+}
+
+updateCounter();
 
 function nextAnniv(){
  const now=new Date();
@@ -285,6 +309,7 @@ function heart(x,y,s){
 
 </body>
 </html>
+
 
 
 
