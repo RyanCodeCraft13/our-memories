@@ -138,7 +138,9 @@ footer{
 <header>
 <h1 id="title">Our Memories</h1>
 <p>Built from moments we’ll never forget</p>
-<div class="counter">Together for <span id="daysCount"></span> days</div>
+
+<!-- CORRECT COUNTER -->
+<div class="counter">Together for <span id="ymdCount"></span></div>
 <div class="counter">Next Aug 29 in <span id="anniv"></span></div>
 </header>
 
@@ -185,13 +187,13 @@ footer{
 <img id="modalImg">
 </div>
 
-<button class="btn" id="musicBtn">▶ Music</button>
+<button class="btn" id="musicBtn">▶️ Music</button>
 <button class="btn" id="slideBtn" onclick="startSlide()">🎞 Slideshow</button>
 
 <audio id="bgMusic" src="Hiraya Manawari - TJ Monterde  KZ Tandingan - Official Lyric Video 2.mp3"></audio>
 
 <script>
-/* COUNTERS */
+/* YEAR • MONTH • DAYS COUNTER */
 const startDate = new Date("2019-08-29");
 
 function calcYMD(start, end) {
@@ -201,30 +203,29 @@ function calcYMD(start, end) {
 
  if (days < 0) {
   months--;
-  const prevMonth = new Date(end.getFullYear(), end.getMonth(), 0).getDate();
-  days += prevMonth;
+  days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
  }
-
  if (months < 0) {
   years--;
   months += 12;
  }
 
- return `${years} year${years!==1?'s':''} ${months} month${months!==1?'s':''} ${days} day${days!==1?'s':''}`;
+ return `${years} year${years!==1?'s':''}, ${months} month${months!==1?'s':''}, ${days} day${days!==1?'s':''}`;
 }
 
 function updateCounter(){
- const now = new Date();
- document.getElementById("ymdCount").textContent = calcYMD(startDate, now);
+ document.getElementById("ymdCount").textContent =
+  calcYMD(startDate, new Date());
 }
-
 updateCounter();
 
+/* NEXT ANNIVERSARY */
 function nextAnniv(){
- const now=new Date();
- let next=new Date(now.getFullYear(),7,29);
- if(now>next) next.setFullYear(next.getFullYear()+1);
- anniv.textContent=Math.floor((next-now)/(1000*60*60*24))+" days";
+ const now = new Date();
+ let next = new Date(now.getFullYear(), 7, 29);
+ if (now > next) next.setFullYear(next.getFullYear() + 1);
+ anniv.textContent =
+  Math.floor((next - now) / (1000*60*60*24)) + " days";
 }
 nextAnniv();
 
@@ -242,38 +243,25 @@ document.querySelectorAll('.gallery img').forEach(img=>{
  img.onclick=()=>{ modal.style.display='flex'; modalImg.src=img.src; }
 });
 
-/* SLIDESHOW FIXED */
-let slideTimer=null;
+function closeModal(){ modal.style.display='none'; stopSlide(); }
+modal.onclick=e=>{ if(e.target===modal) closeModal(); }
 
+/* SLIDESHOW */
+let slideTimer=null;
 function startSlide(){
  if(slideTimer) return;
  const imgs=document.querySelectorAll('.gallery img');
  let i=0;
- slideTimer=setInterval(()=>{
-  imgs[i++%imgs.length].click();
- },3500);
+ slideTimer=setInterval(()=>imgs[i++%imgs.length].click(),3500);
 }
-
-function stopSlide(){
- if(slideTimer){
-  clearInterval(slideTimer);
-  slideTimer=null;
- }
-}
-
-function closeModal(){
- modal.style.display='none';
- stopSlide();
-}
-
-modal.onclick=e=>{ if(e.target===modal) closeModal(); }
+function stopSlide(){ clearInterval(slideTimer); slideTimer=null; }
 
 /* MUSIC */
 const music=bgMusic;
 music.volume=.4;
 musicBtn.onclick=()=>{
  if(music.paused){music.play();musicBtn.textContent="⏸ Pause"}
- else{music.pause();musicBtn.textContent="▶ Music"}
+ else{music.pause();musicBtn.textContent="▶️ Music"}
 };
 
 /* FADE */
@@ -310,8 +298,3 @@ function heart(x,y,s){
 
 </body>
 </html>
-
-
-
-
-
